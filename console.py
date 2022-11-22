@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+from re import X
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -122,18 +123,16 @@ class HBNBCommand(cmd.Cmd):
         if line[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        d = {}
         new_instance = HBNBCommand.classes[line[0]]()
         for i in line[1:]:
-            param = i.split('=')
-            try:
-                param[1] = int(param[1])
-            except Exception:
-                try:
-                    param[1] = float(param[1])
-                except Exception:
-                    param[1] = param[1].split("\"\'")
-            setattr(new_instance, param[0], param[1])
+            key, value = i.split('=')
+            if value[0] == '"':
+                value = value.strip('"').replace('_', ' ')
+            elif '.' in value:
+                value = float(value)
+            else:
+                value = int(value)
+            setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
         storage.save()
