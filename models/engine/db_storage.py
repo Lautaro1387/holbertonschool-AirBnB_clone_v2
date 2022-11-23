@@ -11,5 +11,5 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-                                "hbnb_dev", ,),
+                                "hbnb_dev", ,)
                                 pool_pre_ping=True)
