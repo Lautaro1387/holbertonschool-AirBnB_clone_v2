@@ -7,7 +7,7 @@ user = os.environ.get('HBNB_MYSQL_USER')
 pwd = os.environ.get('HBNB_MYSQL_PWD')
 host = os.environ.get('HBNB_MYSQL_HOST')
 db = os.environ.get('HBNB_MYSQL_DB')
-
+env = os.environ.get('HBNB_ENV')
 class DBStorage:
     """engine"""
     __engine = None
