@@ -3,10 +3,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
-import os.environ.get('HBNB_MYSQL_USER')
-import os.environ.get('HBNB_MYSQL_PWD')
-import os.environ.get('HBNB_MYSQL_HOST')
-import os.environ.get('HBNB_MYSQL_DB')
+import os.environ.get('HBNB_MYSQL_USER') as user
+import os.environ.get('HBNB_MYSQL_PWD') as pwd
+import os.environ.get('HBNB_MYSQL_HOST') as host
+import os.environ.get('HBNB_MYSQL_DB') as db
 
 class DBStorage:
     """engine"""
@@ -15,5 +15,5 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-                                "hbnb_dev", ,)
+                                user, pwd, host)
                                 pool_pre_ping=True)
