@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 from models.base_model import Base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-
+user = os.environ.get('HBNB_MYSQL_USER')
 
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
@@ -13,5 +13,5 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
-    places = relationship("Place")
-    reviews = relationship()
+    places = relationship("Place") #backref=user
+    reviews = relationship("Review")
