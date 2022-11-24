@@ -7,8 +7,14 @@ import datetime
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+import os
+strg = os.environ.get('HBNB_TYPE_STORAGE')
 
-Base = declarative_base()
+if strg == 'db':
+    Base = declarative_base()
+else:
+    class Base:
+        pass
 
 class BaseModel:
     """A base class for all hbnb models"""
