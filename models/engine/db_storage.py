@@ -17,16 +17,18 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine(f'mysql+mysqldb://{user}:{pwd}@{host}/{host}', pool_pre_ping=True)
-        if HBNB_ENV == 'test':
-            #Base.metadata.drop_all
+        if env == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         self.__session.query(cls)
         if cls == None:
             #for k in FileStorage.__objects.id:
+            #incompleto
 
     def new(self, obj):
-        self.__session.add()
+        self.__session.add(obj)
+        self.__session.commit()
 
     def save(self):
         self.__session.commit()
@@ -34,7 +36,8 @@ class DBStorage:
     def delete(self, obj=None):
         if obj != None:
             self.__session.delete(obj)
+            self.save()
 
     def reload(self):
-        Base.metadata.create_all(engine)
-        
+        Base.metadata.create_all(self.__engine)
+        #incompleto
