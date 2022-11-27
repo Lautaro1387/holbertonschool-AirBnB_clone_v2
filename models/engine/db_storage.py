@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """New engine"""
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from models.base_model import Base
+from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 user = os.environ.get('HBNB_MYSQL_USER')
 pwd = os.environ.get('HBNB_MYSQL_PWD')
@@ -23,6 +24,7 @@ class DBStorage:
     def all(self, cls=None):
         self.__session.query(cls)
         if cls == None:
+            pass
             #for k in FileStorage.__objects.id:
             #incompleto
 
@@ -40,4 +42,10 @@ class DBStorage:
 
     def reload(self):
         Base.metadata.create_all(self.__engine)
-        #incompleto
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
+
+    def close(self):
+        self.__session.close()
