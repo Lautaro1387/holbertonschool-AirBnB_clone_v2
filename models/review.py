@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 import os
 strg = os.environ.get('HBNB_TYPE_STORAGE')
 
+
 class Review(BaseModel, Base):
     """ Review classto store review information """
     if strg == 'db':
