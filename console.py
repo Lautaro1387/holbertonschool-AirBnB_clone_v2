@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-from re import X
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -116,40 +115,28 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        """line = args.split(' ')
+        line = args.split(' ')
         if line[0] == '':
             print("** class name missing **")
             return
         if line[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        d = {}
         new_instance = HBNBCommand.classes[line[0]]()
         for i in line[1:]:
-            key, value = i.split('=')
-            if value[0] == '"':
-                value = value.strip('"').replace('_', ' ')
-            elif '.' in value:
-                value = float(value)
-            else:
-                value = int(value)
-            setattr(new_instance, key, value)
+            param = i.split('=')
+            try:
+                param[1] = int(param[1])
+            except Exception:
+                try:
+                    param[1] = float(param[1])
+                except Exception:
+                    param[1] = param[1].split("\"\'")
+            setattr(new_instance, param[0], param[1])
+        storage.save()
         print(new_instance.id)
-        new_instance.save()"""
-        if not args:
-            raise SyntaxError("Error of syntax")
-        first_split = args.split(' ')
-        kwargs = {}
-        for i in range(1, len(first_split)):
-            key, value = tuple(first_split[i].split('='))
-            if value[0] == '"':
-                value = value.strip('"').replace('_', ' ')
-            kwargs[key] = value
-        if kwargs == {}:
-            new_instance = eval(first_split[0])()
-        else:
-            new_instance = eval(first_split[0])(**kwargs)
-        print(new_instance.id)
-        new_instance.save()
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -231,11 +218,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all().items():
+            for k, v in storage._FileStorage__objects.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage.all().items():
+            for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
 
         print(print_list)
