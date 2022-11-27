@@ -10,6 +10,14 @@ host = os.environ.get('HBNB_MYSQL_HOST')
 db = os.environ.get('HBNB_MYSQL_DB')
 env = os.environ.get('HBNB_ENV')
 
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
+
 
 class DBStorage:
     """engine"""
@@ -22,11 +30,18 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        self.__session.query(cls)
-        if cls == None:
-            pass
-            #for k in FileStorage.__objects.id:
-            #incompleto
+        if cls:
+            if type(cls) == str:
+                cls = eval(cls)
+            objs = self.__session.query(cls)
+        else:
+            objs = self.__session.query(State).all()
+            objs.extend(self.__session.query(City).all())
+            objs.extend(self.__session.query(User).all())
+            objs.extend(self.__session.query(Place).all())
+            objs.extend(self.__session.query(Review).all())
+            #objs.extend(self.__session.query(Amenity).all())
+        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
 
     def new(self, obj):
         self.__session.add(obj)
