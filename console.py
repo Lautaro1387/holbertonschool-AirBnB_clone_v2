@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        line = args.split()
+        line = args.split(' ')
         if line[0] == '':
             print("** class name missing **")
             return
@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         for i in line[1:]:
             param = i.split('=')
             try:
-                param[0] = int(param[0])
+                param[1] = int(param[1])
             except Exception:
                 try:
                     param[1] = float(param[1])
