@@ -38,3 +38,28 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         amenity_ids = []
+
+
+    @porperty
+    def reviews(self):
+        """reviews"""
+        revlist = []
+        for review in storage.all(Review).values():
+            if self.id == review.place_id:
+                revlist.append(models.storage.all(Review)[review])
+        return revlist
+
+    @property
+    def amenities(self):
+        """amenities"""
+        amelist = []
+        for amenity in sotrage.all(Amenity).value():
+            if self.id == amenity.place_id:
+                amelist.append(models.storage.all(Amenity)[amenity])
+        return amelist
+
+    @amenities.setter
+    def amenities(self, obj):
+        """amenities obj"""
+        if type(obj).__name__ == "Amenity"
+            self.obj.append(obj.id)
