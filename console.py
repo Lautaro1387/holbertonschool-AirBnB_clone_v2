@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                     param[1] = float(param[1])
                 except Exception:
                     param[1] = param[1].split("\"\'")
-            setattr(new_instance, key, value)
+            setattr(new_instance, param[0], param[1])
         storage.save()
         print(new_instance.id)
         storage.save()
