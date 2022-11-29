@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-"""Script"""
+"""Task 0"""
 from flask import Flask
 
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def index():
     return f'Hello HBNB!'
 
 if __name__ == '__main__':
-    app.run(strict_slashes=False, port=5000)
+    app.run(debug=Flase, host=0.0.0.0, port=5000)
