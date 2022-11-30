@@ -5,7 +5,7 @@
 
 
 from flask import Flask
-from flask import escape
+from markupsafe import escape
 
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_text():
+def c_text(text):
     return 'C {}'.format(escape(text).replace('_', ' '))
 
 
