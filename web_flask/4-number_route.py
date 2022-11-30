@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Script that starts Flask web application
-    Return: Hello HBNB!, HBNB
+    Return: Hello HBNB!, HBNB, C is cool, Python is cool, <int> is number
 """
 
 
@@ -35,6 +35,8 @@ def python_text(text):
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
     if n is int:
-        return 'n is a number'
+        return '{} is a number'.format(escape(n))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
