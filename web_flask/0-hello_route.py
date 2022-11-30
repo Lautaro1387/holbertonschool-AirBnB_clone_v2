@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Script that starts Flask web application
-    Return: 
-        Hello HBNB!
+    Return: Hello HBNB!
 """
 
 
