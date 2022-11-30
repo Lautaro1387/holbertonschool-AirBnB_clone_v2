@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Script that starts Flask web application
-    Return: Hello HBNB!, HBNB, C is cool, Python is cool, <int> is number
+    Return: Hello HBNB!, HBNB, C is cool, Python is cool, <int> is a number
 """
 
 
@@ -32,7 +32,7 @@ def python_text(text):
     return 'Python {}'.format(escape(text).replace('_', ' '))
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     return '{} is a number'.format(escape(n))
 
