@@ -34,8 +34,7 @@ def python_text(text):
 
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
-    if n is int:
-        return '{} is a number'.format(escape(n))
+    return '{} is a number'.format(escape(n))
 
 
 if __name__ == '__main__':
