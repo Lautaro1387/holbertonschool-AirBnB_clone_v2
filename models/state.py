@@ -1,27 +1,39 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
-from models.base_model import BaseModel
-from models.base_model import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+"""This is the state class"""
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import os
-strg = os.environ.get('HBNB_TYPE_STORAGE')
+from os import environ
 
 
 class State(BaseModel, Base):
-    """ State class """
-    if strg == 'db':
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state",
-                cascade="all, delete")
-    else:
-        name = ""
+    """This is the class for State
+    Attributes:
+        __tablename__: name of MySQL table
+        name: input name
+    """
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
 
-    @property
-    def cities(self):
-        """Getter"""
-        from models.city import City
-        for obj in models.storage.City.values():
-            if obj.state._id == self.id:
-                return obj
+    if environ['HBNB_TYPE_STORAGE'] == 'db':
+        cities = relationship('City', cascade='all, delete', backref='state')
+    else:
+        @property
+        def cities(self):
+            """
+            It returns a list of City objects that
+                are associated with the current State object
+            :return: A list of City objects
+            """
+            from models import storage
+            from models.city import City
+            # return list of City objs in __objects
+            c_dict = storage.all(City)
+            c_list = []
+
+            # copy values from dict to list
+            for city in c_dict.values():
+                if city.state_id == self.id:
+                    c_list.append(city)
+
+            return c_list
