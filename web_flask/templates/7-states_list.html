@@ -10,7 +10,7 @@
     <H1>States</H1>
     <UL>
         {{% for state in states|sort(attribute="state[1]") %}}
-            <LI>State {{% state[0] %}}: <B> {{% state[1] %}} </B></LI>
+            <LI>{{ state[0] }}: <B> {{ state[1] }} </B></LI>
         {{% endfor %}}
     </UL>
 </BODY>
