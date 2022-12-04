@@ -7,6 +7,7 @@ from markupsafe import escape
 from models import storage
 from models.state import State
 
+
 app = Flask(__name__)
 
 
@@ -22,6 +23,7 @@ def states_list():
     for state in states.values():
         all_st.append([state.id, state.name])
     return render_template('7-states_list.html', states=all_st)
+
 
 if __name == '__main__':
     app.run(host='0.0.0.0', port='5000')
