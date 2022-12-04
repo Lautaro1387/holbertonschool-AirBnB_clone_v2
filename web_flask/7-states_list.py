@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def storage_close(exception):
+def storage(exception):
     storage.close()
 
 
@@ -20,10 +20,11 @@ def storage_close(exception):
 def states_list():
     states = storage.all(State)
     all_st = []
+
     for state in states.values():
         all_st.append([state.id, state.name])
     return render_template('7-states_list.html', states=all_st)
 
 
-if __name == '__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
