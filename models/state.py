@@ -31,6 +31,7 @@ class State(BaseModel, Base):
             c_dict = storage.all(City)
             c_list = []
 
+            # copy values from dict to list
             for city in c_dict.values():
                 if city.state_id == self.id:
                     c_list.append(city)
