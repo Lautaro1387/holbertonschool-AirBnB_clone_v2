@@ -18,7 +18,7 @@ def storage_close(exception):
 
 @app.route('/states_list', strict_slashes=False)
 def states_list():
-    states = storage.all(Storage)
+    states = storage.all(State)
     all_st = []
     for state in states.values():
         all_st.append([state.id, state.name])
