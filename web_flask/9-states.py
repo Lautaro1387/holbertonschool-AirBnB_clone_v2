@@ -1,54 +1,28 @@
 #!/usr/bin/python3
 """Script that starts a web application"""
 
-from flask import Flask
-from flask import render_template
+from models import storage
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
 
 
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
+def state_id(id):
+    states = storage.all(State).values()
+    st = None
+    for state in states:
+        if id == state.id:
+            st = state
+            break
+    return render_template('9-states.html', states=states, id=id, st=st)
+
+
 @app.teardown_appcontext
 def closed(self):
-    from models import storage
     storage.close()
-
-
-@app.route('/states_list', strict_slashes=False)
-def states_list():
-    from models import storage
-    from models.state import State
-    """display a HTML page: (inside the tag BODY)"""
-    closed = storage.all(State).values()
-    return render_template('7-states_list.html', states=context)
-
-
-@app.route('/cities_by_states', strict_slashes=False)
-def cities_by_states():
-    from models.city import City
-    from models.state import State
-    from models import storage
-    """DBStorage in order"""
-    city_obj = {
-        'states': storage.all(State).values(),
-        'cities': storage.all(City).values()
-    }
-
-    return render_template('8-cities_by_states.html', **city_obj)
-
-
-@app.route('/states', strict_slashes=False)
-def states():
-    closed = storage.all("State")
-    return render_template('9-states.html', closed)
-
-
-@app.route('/states/<id>', strict_slashes=False)
-def states_id(id):
-    for state in storage.all("State").values():
-        if state.id == id:
-            return render_template('9-states.html', state=state)
-    return render_template('9-states.html')
 
 
 if __name__ == '__main__':
