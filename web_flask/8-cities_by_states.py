@@ -1,4 +1,4 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 """Script that starts a web application"""
 
 from flask import Flask
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def context(self):
+def closed(self):
     from models import storage
     storage.close()
 
@@ -19,7 +19,7 @@ def states_list():
     from models import storage
     from models.state import State
     """display a HTML page: (inside the tag BODY)"""
-    context = storage.all(State).values()
+    closed = storage.all(State).values()
     return render_template('7-states_list.html', states=context)
 
 
