@@ -1,19 +1,15 @@
-#!/usr/bin/python3
-"""Script that starts a Flask web application"""
+!/usr/bin/python3
+"""Script that starts a web application"""
 
-
-from flask import Flask, render_template
-from markupsafe import escape
-from models import storage
-from models.state import State
-from models.city import City
+from flask import Flask
+from flask import render_template
 
 
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def storage_close(self):
+def context(self):
     from models import storage
     storage.close()
 
@@ -22,8 +18,9 @@ def storage_close(self):
 def states_list():
     from models import storage
     from models.state import State
-    storage_close = storage.all(State).values()
-    return render_template('7-states_list.html', states=storage_close)
+    """display a HTML page: (inside the tag BODY)"""
+    context = storage.all(State).values()
+    return render_template('7-states_list.html', states=context)
 
 
 @app.route('/cities_by_states', strict_slashes=False)
@@ -31,12 +28,14 @@ def cities_by_states():
     from models.city import City
     from models.state import State
     from models import storage
+    """DBStorage in order"""
     city_obj = {
-        'states' = storage.all(State).values(),
-        'cities' = storage.all(City).values()
+        'states': storage.all(State).values(),
+        'cities': storage.all(City).values()
     }
+
     return render_template('8-cities_by_states.html', **city_obj)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(debug=True, host='0.0.0.0', port=5000)
