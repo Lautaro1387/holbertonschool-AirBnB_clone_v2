@@ -26,10 +26,10 @@ def states_list():
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     city_obj = {
-        'states' = storage.all(State).values()
+        'states' = storage.all(State).values(),
         'cities' = storage.all(City).values()
     }
-    return render_template('8-cities_by_states.html', city_obj)
+    return render_template('8-cities_by_states.html', **city_obj)
 
 
 if __name__ == '__main__':
