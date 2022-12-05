@@ -36,16 +36,19 @@ def cities_by_states():
 
     return render_template('8-cities_by_states.html', **city_obj)
 
+
 @app.route('/states', strict_slashes=False)
-def states_func():
-    closed = storage.all(State).values()
+def states():
+    closed = storage.all("State")
     return render_template('9-states.html', closed)
 
 
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
-    closed = storage.all(State.id).values()
-    return render_template('9-states.html', id=id)
+    for state in storage.all("State").values():
+        if state.id == id:
+            return render_template('9-states.html', state=state)
+    return render_template('9-states.html')
 
 
 if __name__ == '__main__':
