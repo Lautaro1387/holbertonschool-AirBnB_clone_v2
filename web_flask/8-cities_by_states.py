@@ -30,3 +30,7 @@ def cities_by_states():
         'cities' = storage.all(City).values()
     }
     return render_template('8-cities_by_states.html', city_obj)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port='5000')
