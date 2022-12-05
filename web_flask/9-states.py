@@ -2,6 +2,7 @@
 """Script that starts a web application"""
 
 from models import storage
+from models.state import State
 from flask import Flask, render_template
 
 
@@ -21,7 +22,7 @@ def state_id(id=None):
 
 
 @app.teardown_appcontext
-def closed(self):
+def closed(exit):
     storage.close()
 
 
