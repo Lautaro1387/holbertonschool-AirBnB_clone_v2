@@ -14,17 +14,23 @@ app = Flask(__name__)
 
 @app.teardown_appcontext
 def storage_close(self):
+    from models import storage
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
 def states_list():
+    from models import storage
+    from models.state import State
     storage_close = storage.all(State).values()
     return render_template('7-states_list.html', states=storage_close)
 
 
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
+    from models.city import City
+    from models.state import State
+    from models import storage
     city_obj = {
         'states' = storage.all(State).values(),
         'cities' = storage.all(City).values()
