@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/states', strict_slashes=False)
 @app.route('/states/<id>', strict_slashes=False)
-def state_id(id):
+def state_id(id=None):
     states = storage.all(State).values()
     st = None
     for state in states:
